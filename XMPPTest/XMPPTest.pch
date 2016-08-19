@@ -1,0 +1,37 @@
+//
+//  XMPPTest.pch
+//  XMPPTest
+//
+//  Created by 周海 on 16/8/10.
+//  Copyright © 2016年 zhouhai. All rights reserved.
+//
+
+#ifndef XMPPTest_pch
+#define XMPPTest_pch
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+
+#import "XMPPFramework.h"
+#import "ZHXMPPHeader.h"
+#endif
+
+#define kXMPP_HOST @"zhouhai.local"    //xmpp服务器地址
+#define kXMPP_PORT 5222                //xmpp端口，默认5222
+#define bXMPP_domain @"zhouhai.local"
+#define bXMPP_resource @"iphone"
+
+
+
+
+
+
+#define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self; 
+
+
+
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* XMPPTest_pch */
