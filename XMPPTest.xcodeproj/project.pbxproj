@@ -20,6 +20,9 @@
 		B9AB951C1D59CB240091434C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9AB951B1D59CB240091434C /* LoginViewController.m */; };
 		B9AB951F1D59CDC30091434C /* RegisteredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9AB951E1D59CDC30091434C /* RegisteredViewController.m */; };
 		B9AB95271D59DDC20091434C /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B9AB95231D59D73D0091434C /* libxml2.tbd */; };
+		B9B170E21D66AAF6009A558D /* ChatRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B170E11D66AAF6009A558D /* ChatRoom.m */; };
+		B9B170E61D66B1B5009A558D /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B170E51D66B1B5009A558D /* Base64.m */; };
+		B9B170E81D66B2D4009A558D /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B170E71D66B2D4009A558D /* test.jpg */; };
 		B9B7CB571D5B164700FF95FC /* ZHXMPPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B7CB561D5B164700FF95FC /* ZHXMPPTool.m */; };
 		CE44246B3DD52510A7883C66 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9932F5C5897EDC20C946EAC /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -70,6 +73,11 @@
 		B9AB951E1D59CDC30091434C /* RegisteredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisteredViewController.m; sourceTree = "<group>"; };
 		B9AB95231D59D73D0091434C /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		B9AB95251D59D74A0091434C /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		B9B170E01D66AAF6009A558D /* ChatRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoom.h; sourceTree = "<group>"; };
+		B9B170E11D66AAF6009A558D /* ChatRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoom.m; sourceTree = "<group>"; };
+		B9B170E41D66B1B5009A558D /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		B9B170E51D66B1B5009A558D /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
+		B9B170E71D66B2D4009A558D /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = test.jpg; path = ../test.jpg; sourceTree = "<group>"; };
 		B9B7CB551D5B164700FF95FC /* ZHXMPPTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHXMPPTool.h; sourceTree = "<group>"; };
 		B9B7CB561D5B164700FF95FC /* ZHXMPPTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHXMPPTool.m; sourceTree = "<group>"; };
 		B9B7CB591D5B17A100FF95FC /* XMPPTest.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMPPTest.pch; sourceTree = "<group>"; };
@@ -148,10 +156,13 @@
 		B9AB94E61D59C4680091434C /* XMPPTest */ = {
 			isa = PBXGroup;
 			children = (
+				B9B170E31D66B1B5009A558D /* Base64 */,
 				B9AB94EA1D59C4680091434C /* AppDelegate.h */,
 				B9AB94EB1D59C4680091434C /* AppDelegate.m */,
 				B9B7CB551D5B164700FF95FC /* ZHXMPPTool.h */,
 				B9B7CB561D5B164700FF95FC /* ZHXMPPTool.m */,
+				B9B170E01D66AAF6009A558D /* ChatRoom.h */,
+				B9B170E11D66AAF6009A558D /* ChatRoom.m */,
 				B9AB951A1D59CB240091434C /* LoginViewController.h */,
 				B9AB951B1D59CB240091434C /* LoginViewController.m */,
 				B950497F1D5C176B003AD443 /* FriendsViewController.h */,
@@ -197,6 +208,16 @@
 				B9AB950E1D59C4690091434C /* Info.plist */,
 			);
 			path = XMPPTestUITests;
+			sourceTree = "<group>";
+		};
+		B9B170E31D66B1B5009A558D /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				B9B170E71D66B2D4009A558D /* test.jpg */,
+				B9B170E41D66B1B5009A558D /* Base64.h */,
+				B9B170E51D66B1B5009A558D /* Base64.m */,
+			);
+			path = Base64;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,6 +329,7 @@
 				B9AB94F71D59C4690091434C /* LaunchScreen.storyboard in Resources */,
 				B9AB94F41D59C4690091434C /* Assets.xcassets in Resources */,
 				B9AB94F21D59C4680091434C /* Main.storyboard in Resources */,
+				B9B170E81D66B2D4009A558D /* test.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,10 +403,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B95049811D5C176B003AD443 /* FriendsViewController.m in Sources */,
+				B9B170E21D66AAF6009A558D /* ChatRoom.m in Sources */,
 				B950498E1D5C64FB003AD443 /* TestMessagesViewController.m in Sources */,
 				B9AB94EC1D59C4680091434C /* AppDelegate.m in Sources */,
 				B95531A91D630F6A00B5B22E /* AddFrieddController.m in Sources */,
 				B9AB94E91D59C4680091434C /* main.m in Sources */,
+				B9B170E61D66B1B5009A558D /* Base64.m in Sources */,
 				B9AB951F1D59CDC30091434C /* RegisteredViewController.m in Sources */,
 				B9B7CB571D5B164700FF95FC /* ZHXMPPTool.m in Sources */,
 				B9AB951C1D59CB240091434C /* LoginViewController.m in Sources */,
@@ -530,6 +554,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = XMPPTest/XMPPTest.pch;
 				INFOPLIST_FILE = XMPPTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ZhongYiShiLian.XMPPTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -544,6 +569,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = XMPPTest/XMPPTest.pch;
 				INFOPLIST_FILE = XMPPTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ZhongYiShiLian.XMPPTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";

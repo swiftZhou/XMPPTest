@@ -12,7 +12,8 @@
 #import <UIImageView+WebCache.h>
 #import "XMPPRoom.h"
 #import "XMPPRoomCoreDataStorage.h"
-@interface TestMessagesViewController()<UITableViewDataSource,UITableViewDelegate,ZHMessageDelegate,UITextFieldDelegate,XMPPRoomDelegate>
+#import "Base64.h"
+@interface TestMessagesViewController()<UITableViewDataSource,UITableViewDelegate,ZHMessageDelegate,UITextFieldDelegate,XMPPRoomDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, strong) UITableView *chatTableview;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UIView *bView;
@@ -56,7 +57,63 @@
         [self initxmpproom];
     }
     
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithTitle:@"选择图片" style:UIBarButtonItemStylePlain target:self action:@selector(selectImage)];
+    self.navigationItem.rightBarButtonItem = buttonItem;
    
+}
+#pragma mark -选择要发送的图片
+-(void)selectImage{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"请选择文件来源" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"照相机",@"本地相簿", nil];
+    [actionSheet showInView:self.view];
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    
+    
+    switch (buttonIndex) {
+        case 0://照相机
+        {
+            UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+            if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])
+            {
+                UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+                picker.delegate = self;
+                //设置拍照后的图片可被编辑
+                picker.allowsEditing = YES;
+                picker.sourceType = sourceType;
+                [self presentViewController:picker animated:YES completion:^{
+                }];
+            }else
+            {
+                
+            }
+        }
+            break;
+        case 1://本地相簿
+        {
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self presentViewController:imagePicker animated:YES completion:^{
+            }];
+        }
+            break;
+        default:
+            break;
+    }
+}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [self sendImage:image];
+    }];
+    
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
@@ -217,6 +274,7 @@
 }
 #pragma makr -创建聊天TableView
 - (void)createTableview{
+    
     self.chatTableview = [UITableView new];
     _chatTableview.delegate = self;
     _chatTableview.dataSource = self;
@@ -235,10 +293,7 @@
 #pragma mark - 收到消息
 -(void)newMessageReceived:(id)messageContent{
     [self.messages addObject:messageContent];
-    
     [self.chatTableview reloadData];
-    
-    
 }
 #pragma mark - 发送消息
 - (void)sendMessage:(NSString *)message{
@@ -253,6 +308,7 @@
     [self.messages addObject:string];
     [self.chatTableview reloadData];
     _textField.text = @"";
+        
     }
 }
 
@@ -267,14 +323,40 @@
     if (cell==nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:testCellIdentfriead];
     }
+    // 第一种图片方式
+    /*
     NSString *messageStr = self.messages[indexPath.row];
     if ([messageStr hasSuffix:@".jpg"]) {
         NSString *str =  [messageStr substringFromIndex:9];
         NSURL *url = [NSURL URLWithString:str];
         [cell.imageView sd_setImageWithURL:url];
     }
-    cell.textLabel.text = self.messages[indexPath.row];
+    */
+    
+    NSString *str = self.messages[indexPath.row];
+    NSRange range = [str rangeOfString:@":"];
+    NSString *message = [str substringFromIndex:range.location+1];
+    
+    NSData *data = [NSData dataWithBase64EncodedString:message];
+    UIImage *image = [UIImage imageWithData: data];
+    if (image == nil) {
+        
+        cell.textLabel.text = self.messages[indexPath.row];
+    } else{
+        NSString *name = [str substringToIndex:range.location];
+        cell.textLabel.text = name;
+        [cell.imageView setImage:image];
+    }
+    
     return cell;
 }
 
+#pragma makr 发送图片
+- (void)sendImage:(UIImage *)image{
+    NSData* data = UIImageJPEGRepresentation(image, 0.001);
+    NSString* base64Image = [data base64EncodedString];
+    XMPPMessage *xmppmessage = [XMPPMessage messageWithType:@"chat" to:self.chatJID];
+    [xmppmessage addBody:base64Image];
+    [[ZHXMPPTool sharedInstance].xmppStream sendElement:xmppmessage];
+}
 @end
